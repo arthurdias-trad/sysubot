@@ -1,7 +1,15 @@
 require("dotenv").config();
+const fs = require("fs");
+const path = require("node:path");
 const cron = require("cron");
 
-const { registerCommands } = require("./commands/deployer");
+const { registerCommands } = require(path.join(
+  __dirname,
+  "commands",
+  "deployer.js"
+));
+
+console.log(registerCommands);
 
 const { token, clientId } = process.env;
 
@@ -25,6 +33,9 @@ const dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
 
 if (!dailyMessage.message || dailyMessage.message == "") {
   dailyMessage.active = false;
+  fs.writeFile("./dailymessage.json", JSON.stringify(dailyMessage), (err) => {
+    if (err) throw err;
+  });
 }
 
 let scheduledMessage;
