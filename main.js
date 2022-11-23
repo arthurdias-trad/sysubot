@@ -1,7 +1,9 @@
 require("dotenv").config();
 // const cron = require("cron");
 
-const { token } = process.env;
+const { registerCommands } = require("./commands/deployer");
+
+const { token, clientId } = process.env;
 
 const prefix = "!";
 
@@ -16,6 +18,8 @@ const client = new Client({
     GatewayIntentBits.GuildIntegrations,
   ],
 });
+
+registerCommands(clientId);
 
 client.once("ready", () => {
   console.log("Bot is online");
