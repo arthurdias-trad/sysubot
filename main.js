@@ -1,5 +1,5 @@
 require("dotenv").config();
-// const cron = require("cron");
+const cron = require("cron");
 
 const { registerCommands } = require("./commands/deployer");
 
@@ -21,8 +21,29 @@ const client = new Client({
 
 registerCommands(clientId);
 
+const dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
+
+if (!dailyMessage.message || dailyMessage.message == "") {
+  dailyMessage.active = false;
+}
+
+let scheduledMessage;
+
 client.once("ready", () => {
   console.log("Bot is online");
+  scheduledMessage = new cron.CronJob(
+    "00 00 13 * * *",
+    () => {
+      const guild = client.guilds.cache.get("1028731568384131204");
+      const channel = guild.channels.cache.find(
+        (channel) => channel.name === "general"
+      );
+      channel.send(dailyMessage.message);
+    },
+    null,
+    false,
+    "America/New_York"
+  );
 });
 
 client.on("guildMemberAdd", (member) => {
