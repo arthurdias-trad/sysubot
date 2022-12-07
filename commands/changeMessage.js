@@ -1,8 +1,6 @@
 const fs = require("node:fs");
 const { SlashCommandBuilder } = require("discord.js");
 
-const dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("changemsg")
@@ -16,6 +14,7 @@ module.exports = {
   async execute(interaction) {
     let action = interaction.options.getInteger("action");
     let message = interaction.options.getString("messagecontent");
+    let dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
     let newDailyMessage = {};
     newDailyMessage.message = message;
     newDailyMessage.active = dailyMessage.active;

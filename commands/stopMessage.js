@@ -1,14 +1,14 @@
 const fs = require("node:fs");
 const { SlashCommandBuilder } = require("discord.js");
 
-const dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stopmsg")
     .setDescription("Stops posting the daily message"),
   async execute(interaction) {
     let newDailyMessage = {};
+
+    let dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
 
     newDailyMessage.message = dailyMessage.message;
 

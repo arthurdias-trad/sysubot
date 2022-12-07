@@ -1,5 +1,6 @@
 const { REST, Routes } = require("discord.js");
 const fs = require("fs");
+require("dotenv").config();
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
@@ -15,7 +16,7 @@ for (const file of commandFiles) {
 
 console.log(commands);
 
-const rest = new REST({ version: "10" }).setToken(token);
+const rest = new REST({ version: "10" }).setToken(process.env.token);
 
 exports.registerCommands = async (clientId) => {
   try {

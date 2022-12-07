@@ -1,14 +1,13 @@
 const fs = require("node:fs");
 const { SlashCommandBuilder } = require("discord.js");
 
-const dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("startmsg")
     .setDescription("Starts daily message (posted everyday at 1PM EST)"),
   async execute(interaction) {
     let newDailyMessage = {};
+    let dailyMessage = JSON.parse(fs.readFileSync("./dailyMessage.json"));
 
     if (!dailyMessage.message) {
       await interaction.reply({
