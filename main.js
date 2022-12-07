@@ -80,6 +80,8 @@ client.once("ready", () => {
 client.on("guildMemberAdd", (member) => {
   console.log(member);
 
+  let welcomeMsg = `Hey there, ${member.user.username}! I'm SaveYourSons Bot, nice to meet you.\n\nThank you for joining our community!\n\nOne of our administrators will message you shortly as well, but in the mean time, you can learn more about the community in the #welcome-and-rules channel, and tell us about yourself in #introduce-yourself.\n\nSee your around!}`;
+
   let msg = `New member alert! ${member.user.username} has joined ${member.guild.name}`;
 
   member.guild.fetchOwner().then((owner) => owner.send(msg));
@@ -88,6 +90,8 @@ client.on("guildMemberAdd", (member) => {
       m.send(msg);
     }
   });
+
+  member.send(welcomeMsg);
 });
 
 client.on("ready", () => {
@@ -106,7 +110,7 @@ client.on("messageCreate", (msg) => {
   if (!message.startsWith(prefix)) return;
 
   msg.guild.members.cache.map((member) => {
-    if (member.roles.cache.find((r) => r.name === "community manager")) {
+    if (member.roles.cache.find((r) => r.name === "Admin")) {
       console.log(member.user.username);
       member.send(message.slice(prefix.length));
     }
@@ -126,11 +130,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 
   if (
-    interaction.user.id !== interaction.guild.ownerId ||
-    interaction.user.id !== "811311413540552726"
+    interaction.user.id !== interaction.guild.ownerId &&
+    interaction.user.username !== "Arthur_Dias"
   ) {
     await interaction.reply({
-      content: "You are no authorized to use this command.",
+      content: "You are not authorized to use this command.",
       ephemeral: true,
     });
     return;
