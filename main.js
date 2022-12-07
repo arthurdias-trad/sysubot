@@ -80,7 +80,7 @@ client.once("ready", () => {
 client.on("guildMemberAdd", (member) => {
   console.log(member);
 
-  let welcomeMsg = `Hey there, ${member.user.username}! I'm SaveYourSons Bot, nice to meet you.\n\nThank you for joining our community!\n\nOne of our administrators will message you shortly as well, but in the mean time, you can learn more about the community in the #welcome-and-rules channel, and tell us about yourself in #introduce-yourself.\n\nSee your around!}`;
+  let welcomeMsg = `Hey there, ${member.user.username}!\nI'm SaveYourSons Bot, nice to meet you.\n\nThank you for joining our community!\n\nOne of our administrators will message you shortly as well, but in the mean time, you can learn more about the community in the #welcome-and-rules channel, and tell us about yourself in #introduce-yourself.\n\nSee your around!`;
 
   let msg = `New member alert! ${member.user.username} has joined ${member.guild.name}`;
 
