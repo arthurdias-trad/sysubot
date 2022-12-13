@@ -10,7 +10,7 @@ const commandFiles = fs
 
 const { registerCommands } = require(path.join(__dirname, "deployer.js"));
 
-const { token, clientId } = process.env;
+const { token, clientId, myId } = process.env;
 
 const prefix = "!";
 
@@ -86,10 +86,14 @@ client.on("guildMemberAdd", (member) => {
 
   member.guild.fetchOwner().then((owner) => owner.send(msg));
   member.guild.members.cache.find((m) => {
-    if (m.username == "Arthur_Dias") {
+    if (m.user == "Arthur_Dias") {
       m.send(msg);
     }
   });
+  let me = client.users.cache.get(myId);
+  if (me) {
+    me.send(msg);
+  }
 
   member.send(welcomeMsg);
 });
